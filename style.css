@@ -22,7 +22,6 @@
   margin-bottom: 30px;
 }
 
-
 .buttons {
   position: relative;
   display: grid;
@@ -68,6 +67,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   position: absolute;
   width: 250px;
   height: 250px;
@@ -75,6 +75,14 @@
   align-self: center;
   justify-self: center;
   background-color: rgb(20, 20, 20);
+  color: antiquewhite;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-bottom: 10px;
 }
 
 .selected {

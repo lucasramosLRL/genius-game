@@ -8,9 +8,12 @@ const green = document.querySelector('.green');
 const blue = document.querySelector('.blue');
 const yellow = document.querySelector('.yellow');
 
+const scoreElement = document.querySelector('.score');
+const levelElement = document.querySelector('.level');
+
 const start = document.querySelector('.start-btn');
 
-// Cria uma ordem aleatória de cores
+// Generate a random order of colors and highlight they
 const generateOrder = () => {
   let randomNumber = Math.floor(Math.random() * 4);
   order[order.length] = randomNumber;
@@ -25,6 +28,7 @@ const generateOrder = () => {
   clickableButtons(true);
 }
 
+// Highlight a color for a while and then take it back to normal
 const highlightColor = (element, number) => {
   number = number * 700;
   setTimeout(() => {
@@ -36,6 +40,7 @@ const highlightColor = (element, number) => {
   }, number + 150);
 }
 
+// Return the button element name based on a number
 const getColorElement = (color) => { 
   if(color == 0){
     return red;
@@ -48,6 +53,7 @@ const getColorElement = (color) => {
   }
 }
 
+// Register the order of buttons clicked by the player and highlight the button
 const click = (color) => {
   clickedOrder[clickedOrder.length] = color;
   
@@ -56,6 +62,7 @@ const click = (color) => {
   checkOrder();
 }
 
+// Compare the generated order with the clicked order and decide if the game goes to next level or is over.
 const checkOrder = () => {
   for(let i in clickedOrder) {
     if(clickedOrder[i] != order[i]) {
@@ -70,8 +77,11 @@ const checkOrder = () => {
   }
 }
 
+// Update the status values displayed on screen and generate a new random order
 const nextLevel = () => {
   ++level;
+
+  updateStats();
 
   generateOrder();
 }
@@ -79,10 +89,16 @@ const nextLevel = () => {
 let gameOver = () => {
   alert(`Score: ${score}!\nWrong order!\nClick "Start" to begin a new game!`);
 
+  // colors click disabled until a new game is started
   clickableButtons(false);
+
+  level = 1;
+  
+  updateStats();
 }
 
-clickableButtons = (clickable) => {
+// Disable/Enable the click event of the color buttons
+const clickableButtons = (clickable) => {
   for(let i = 0; i < 4; i++) {
     if(clickable) {    
       getColorElement(i).classList.remove('blocked');
@@ -92,12 +108,20 @@ clickableButtons = (clickable) => {
   }
 }
 
+const updateStats = () => {
+  scoreElement.innerHTML = `Score: ${score}`;
+  levelElement.innerHTML = `Level: ${level}`;
+}
+
+// Resets everything and starts the new game
 const playGame = () => {
   score = 0;
   level = 1;
 
   order.length = 0;
   clickedOrder.length = 0;
+
+  updateStats();
 
   generateOrder();
 }
@@ -109,4 +133,5 @@ yellow.onclick = () =>  click(3);
 
 start.onclick = () => playGame();
 
+// Start the game with the colors click disabled
 clickableButtons(false);
