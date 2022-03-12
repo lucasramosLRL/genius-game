@@ -84,7 +84,6 @@ const checkOrder = () => {
 
 // Update the status values displayed on screen and generate a new random order
 const nextLevel = () => {
-  let countdown = 3;
   ++level;
 
   // colors click disabled until a new game is started
