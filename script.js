@@ -3,14 +3,17 @@ const clickedOrder = [];
 let score = 0;
 let level = 1;
 
+// game buttons
 const red = document.querySelector('.red');
 const green = document.querySelector('.green');
 const blue = document.querySelector('.blue');
 const yellow = document.querySelector('.yellow');
 
+// game stats display
 const scoreElement = document.querySelector('.score');
 const levelElement = document.querySelector('.level');
 
+const alert = document.querySelector('.alert');
 const start = document.querySelector('.start-btn');
 
 // Generate a random order of colors and highlight they
@@ -53,7 +56,7 @@ const getColorElement = (color) => {
   }
 }
 
-// Register the order of buttons clicked by the player and highlight the button
+// Register the order of buttons clicked by the player and highlight clicked one
 const click = (color) => {
   clickedOrder[clickedOrder.length] = color;
   
@@ -62,7 +65,7 @@ const click = (color) => {
   checkOrder();
 }
 
-// Compare the generated order with the clicked order and decide if the game goes to next level or is over.
+// Compare the generated order with the user order and decide if the game goes to next level or is over.
 const checkOrder = () => {
   for(let i in clickedOrder) {
     if(clickedOrder[i] != order[i]) {
@@ -72,22 +75,30 @@ const checkOrder = () => {
   }
   if(clickedOrder.length == order.length) {
     score++;
-    alert(`Score: ${score}\nSuccess! Starting next level!`);
+
+    gameAlert(true);
+
     nextLevel();
   }
 }
 
 // Update the status values displayed on screen and generate a new random order
 const nextLevel = () => {
+  let countdown = 3;
   ++level;
+
+  // colors click disabled until a new game is started
+  clickableButtons(false);
 
   updateStats();
 
-  generateOrder();
+  setTimeout(() => {
+    generateOrder();
+  }, 2000);
 }
 
-let gameOver = () => {
-  alert(`Score: ${score}!\nWrong order!\nClick "Start" to begin a new game!`);
+const gameOver = () => {
+  gameAlert(false);
 
   // colors click disabled until a new game is started
   clickableButtons(false);
@@ -95,6 +106,26 @@ let gameOver = () => {
   level = 1;
   
   updateStats();
+
+  startButtonEnabled(true);
+}
+
+// Display alerts for correct orders and wrong orders
+const gameAlert = (success) => {
+  if(success) { 
+    alert.classList.add('correct');
+    alert.innerHTML = "Correct, starting next level";
+  } else {
+    alert.classList.add('wrong');
+    alert.innerHTML = "Wrong, click start and try again";
+  }
+
+  alert.style.visibility = 'visible';
+  
+  setTimeout(() => {
+    alert.style.visibility = 'hidden';
+    alert.classList.remove(success ? 'correct' : 'wrong');
+  }, 2000);
 }
 
 // Disable/Enable the click event of the color buttons
@@ -105,6 +136,17 @@ const clickableButtons = (clickable) => {
     } else {
       getColorElement(i).classList.add('blocked');
     }
+  }
+}
+
+// Enable/disable
+const startButtonEnabled = (enabled) => {
+  if(enabled) {
+    start.classList.remove("blocked");
+    start.classList.remove("selected");
+  } else {
+    start.classList.add("blocked");
+    start.classList.add("selected");
   }
 }
 
@@ -120,6 +162,8 @@ const playGame = () => {
 
   order.length = 0;
   clickedOrder.length = 0;
+
+  startButtonEnabled(false);
 
   updateStats();
 

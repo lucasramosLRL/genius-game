@@ -1,3 +1,12 @@
+:root {
+  --red: rgb(175, 0, 0);
+  --green: rgb(0, 153, 0);
+  --blue: rgb(0, 0, 190);
+  --yellow: rgb(207, 207, 1);
+  --bg-color: rgb(20, 20, 20);
+  --text: rgb(243, 233, 220);
+}
+
 * {
   margin: 0;
   background: rgb(20, 20, 20);
@@ -13,7 +22,7 @@
 }
 
 .header {
-  color: antiquewhite;
+  color: var(--text);
   margin-bottom: 50px;
 }
 
@@ -23,42 +32,40 @@
 }
 
 .buttons {
-  position: relative;
   display: grid;
   grid-template-areas: '1 2'
   '3 4';
   grid-gap: 10px;
   width: 500px;
   height: 500px;
-  border: 1px solid rgb(20, 20, 20);
-  background-color: rgb(20, 20, 20);
-  border-radius: 100%;
+  border: 1px solid var(--bg-color);
+  background-color: var(--bg-color);
 }
 
 .red {
   grid-area: '1';
-  background-color: rgb(175, 0, 0);
+  background-color: var(--red);
   border-top-left-radius: 100%;
   cursor: pointer;
 }
 
 .green {
   grid-area: '2';
-  background-color: rgb(0, 153, 0);
+  background-color: var(--green);
   border-top-right-radius: 100%;
   cursor: pointer;
 }
 
 .blue {
   grid-area: '3';
-  background-color: rgb(0, 0, 190);
+  background-color: var(--blue);
   border-bottom-left-radius: 100%;
   cursor: pointer;
 }
 
 .yellow {
   grid-area: '4';
-  background-color: rgb(207, 207, 1);
+  background-color: var(--yellow);
   border-bottom-right-radius: 100%;
   cursor: pointer;
 }
@@ -74,8 +81,29 @@
   border-radius: 100%;
   align-self: center;
   justify-self: center;
-  background-color: rgb(20, 20, 20);
-  color: antiquewhite;
+  background-color: var(--bg-color);
+  color: var(--text);
+}
+
+.alert {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: var(--green);
+  color: var(--text);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  height: 23px;
+  width: 90%;
+  visibility: hidden;
+}
+
+.correct {
+  background-color: var(--green);
+}
+
+.wrong {
+  background-color: var(--red);
 }
 
 .stats {
@@ -96,12 +124,11 @@
 .start-btn {
   cursor: pointer;
   text-align: center;
-  height: 40px;
+  height: 35px;
   width: 200px;
   font-size: 30px;
-  background-color: rgb(0, 128, 0); 
-  color: rgb(255, 255, 255);
-  border: 1px solid rgb(0, 0, 0);
-  display: inline-block;
+  background-color: var(--green); 
+  color: var(--text);
   border-radius: 10px;
+  font-weight: bold;
 }
